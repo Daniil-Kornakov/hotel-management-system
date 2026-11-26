@@ -70,3 +70,8 @@ Testing/
 
 # Локальные файлы Visual Studio
 .vs/
+*.vcxproj.user
+Debug/
+Release/
+x64/
+x86/
