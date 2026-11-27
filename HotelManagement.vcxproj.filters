@@ -21,9 +21,21 @@
     <ClCompile Include="service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="service_order.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="booking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="service_order.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="booking.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

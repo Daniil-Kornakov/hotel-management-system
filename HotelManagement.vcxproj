@@ -131,11 +131,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="booking.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="service.cpp" />
     <ClCompile Include="service_order.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="booking.hpp" />
     <ClInclude Include="service.hpp" />
     <ClInclude Include="service_order.hpp" />
   </ItemGroup>

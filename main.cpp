@@ -1,51 +1,119 @@
-// Курсовой проект по ООП.
-// Студент: Корнаков Д. Р., группа ПИ-53.
+#include "booking.hpp"
+#include "service.hpp"
+
 #include <iostream>
 #include <windows.h>
 
-#include "service.hpp"
-#include "service_order.hpp"
-
-using namespace std;
-
-int main() {
+int main()
+{
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
 
-    cout << "Курсовой проект.\n";
-    cout << "Автор: Корнаков Д. Р., ПИ-53\n";
-    cout << "Система управления гостиницей\n";
+    std::cout << "Лабораторная работа N 2\n";
+    std::cout << "Система управления гостиницей\n";
 
-    hotel::Service parking("Парковка", "сутки", 300);
+    hotel::Service parking(
+        "Парковка", "сутки", 300,
+        hotel::ServiceType::eParking);
 
-    parking.PrintInfo();
+    hotel::Service breakfast(
+        "Завтрак", "порция", 500,
+        hotel::ServiceType::eBreakfast);
 
-    cout << "Стоимость за 3 суток: "
-        << parking.CalculateCost(3) << " руб.\n";
+    std::cout << "\nОсновной сценарий:\n";
 
-    // Попытка нарушить правило.
-    parking.CalculateCost(0);
-
-    hotel::ServiceOrder* order = parking.CreateOrder(3);
-
-    if (order != nullptr)
     {
-        order->PrintInfo();
+        hotel::Booking booking(1, true);
 
-        // Добавляем ещё одни сутки.
-        order->AddQuantity(1);
-        order->PrintInfo();
+        booking.PrintInfo();
 
-        // Некорректное действие: количество не изменится.
-        order->AddQuantity(0);
-        order->PrintInfo();
+        booking.StartStay();
+        booking.AddService(parking, 3);
 
-        delete order;
-        order = nullptr;
+        // Проверки правил: оба действия будут отклонены.
+        booking.AddService(parking, 0);
+        booking.AddService(breakfast, 1);
+
+        booking.FinishStay();
+        booking.PrintInfo();
     }
 
-    // Услуга существует после уничтожения заказа.
+    std::cout << "\nБронирование и его заказ уничтожены."
+        << "\nУслуга продолжает существовать:\n";
+
     parking.PrintInfo();
+
+    std::cout << "\nРабота по ссылке:\n";
+
+    hotel::Service& serviceRef = parking;
+    serviceRef.PrintInfo();
+
+    std::cout << "\nРабота по указателю:\n";
+
+    const hotel::Service* servicePtr = &parking;
+    servicePtr->PrintInfo();
+
+    std::cout << "\nДинамический объект:\n";
+
+    hotel::Service* laundry = new hotel::Service(
+        "Стирка", "вещь", 200,
+        hotel::ServiceType::eLaundry);
+
+    laundry->PrintInfo();
+
+    delete laundry;
+    laundry = nullptr;
+
+    std::cout << "\nДинамический массив объектов:\n";
+
+    hotel::Service* services = new hotel::Service[2]
+    {
+        hotel::Service(
+            "Парковка", "сутки", 300,
+            hotel::ServiceType::eParking),
+
+        hotel::Service(
+            "Стирка", "вещь", 200,
+            hotel::ServiceType::eLaundry)
+    };
+
+    for (int i = 0; i < 2; ++i)
+    {
+        services[i].PrintInfo();
+    }
+
+    delete[] services;
+    services = nullptr;
+
+    std::cout << "\nМассив динамических объектов:\n";
+
+    hotel::Service** servicePointers =
+        new hotel::Service * [2] {};
+
+    servicePointers[0] = new hotel::Service(
+        "Парковка", "сутки", 300,
+        hotel::ServiceType::eParking);
+
+    servicePointers[1] = new hotel::Service(
+        "Стирка", "вещь", 200,
+        hotel::ServiceType::eLaundry);
+
+    for (int i = 0; i < 2; ++i)
+    {
+        servicePointers[i]->PrintInfo();
+    }
+
+    for (int i = 0; i < 2; ++i)
+    {
+        delete servicePointers[i];
+        servicePointers[i] = nullptr;
+    }
+
+    delete[] servicePointers;
+    servicePointers = nullptr;
+
+    std::cout << "\nКонец демонстрации."
+        << "\nУничтожаются оставшиеся локальные услуги:\n";
 
     return 0;
 }

@@ -9,10 +9,12 @@ namespace hotel
 
     Service::Service(const std::string& name,
         const std::string& unit,
-        int price)
+        int price,
+        ServiceType type)
         : m_name{ name }
         , m_unit{ unit }
         , m_price{ price }
+        , m_type{ type }
     {
         if (m_price < 0)
         {
@@ -76,6 +78,11 @@ namespace hotel
         }
 
         return new ServiceOrder(*this, quantity);
+    }
+
+    ServiceType Service::GetType() const
+    {
+        return m_type;
     }
 
 } // namespace hotel
