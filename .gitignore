@@ -67,3 +67,11 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Локальные файлы Visual Studio
+.vs/
+*.vcxproj.user
+Debug/
+Release/
+x64/
+x86/
